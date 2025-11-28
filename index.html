@@ -3,200 +3,79 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Happy Birthday Hachiiii 🎂</title>
+<title>Happy Birthday Hachiiii 🎀</title>
 
-<!-- Handwritten font -->
-<link href="https://fonts.googleapis.com/css2?family=Pacifico&display=swap" rel="stylesheet">
+<!-- Google Fonts (handwritten + pastel aesthetic) -->
+<link href="https://fonts.googleapis.com/css2?family=Pacifico&family=Poppins:wght@300;400&display=swap" rel="stylesheet">
 
 <style>
     body {
         margin: 0;
-        background: #ffeef7;
-        font-family: "Arial", sans-serif;
+        background: #ffe6f2;
+        font-family: 'Poppins', sans-serif;
+        overflow-x: hidden;
         text-align: center;
     }
 
-    /* Intro Screen */
-    #intro {
-        position: fixed;
-        inset: 0;
-        background: #ffe6f2;
-        display: flex;
-        flex-direction: column;
-        justify-content: center;
-        align-items: center;
-        animation: fadeOut 1s ease forwards;
-        animation-delay: 4s;
-        z-index: 10;
+    h1 {
+        font-family: 'Pacifico', cursive;
+        font-size: 55px;
+        color: #ff7eb8;
+        margin-top: 80px;
+        animation: fadeIn 2.5s ease-in-out;
     }
 
-    #intro h1 {
-        font-family: "Pacifico", cursive;
-        font-size: 48px;
-        color: #d6006f;
-        opacity: 0;
-        animation: fadeIn 2s forwards;
-    }
-
-    #intro p {
+    p {
         font-size: 20px;
-        color: #b30059;
-        opacity: 0;
-        animation: fadeIn 2s forwards;
-        animation-delay: 1.5s;
+        width: 80%;
+        margin: 20px auto;
+        color: #444;
+        animation: fadeIn 3s ease-in-out;
+    }
+
+    .cake-image {
+        width: 260px;
+        margin-top: 30px;
+        animation: float 3s ease-in-out infinite;
+    }
+
+    /* Floating Animation */
+    @keyframes float {
+        0% { transform: translateY(0); }
+        50% { transform: translateY(-15px); }
+        100% { transform: translateY(0); }
     }
 
     @keyframes fadeIn {
         from { opacity: 0; transform: translateY(20px); }
         to { opacity: 1; transform: translateY(0); }
     }
-
-    @keyframes fadeOut {
-        to { opacity: 0; visibility: hidden; }
-    }
-
-    /* Main content */
-    h2 {
-        margin-top: 40px;
-        font-family: "Pacifico", cursive;
-        color: #d6006f;
-        font-size: 40px;
-    }
-
-    #message {
-        font-size: 20px;
-        color: #8a0040;
-        padding: 0 20px;
-        max-width: 600px;
-        margin: auto;
-        font-family: "Pacifico", cursive;
-    }
-
-    #cake {
-        width: 240px;
-        cursor: pointer;
-        margin-top: 20px;
-        border-radius: 12px;
-    }
-
-    #btn {
-        background: #d6006f;
-        border: none;
-        padding: 14px 22px;
-        color: white;
-        font-size: 18px;
-        border-radius: 10px;
-        cursor: pointer;
-        margin-top: 20px;
-        font-family: "Pacifico", cursive;
-    }
-
-    #btn:hover {
-        background: #b0005e;
-    }
 </style>
 </head>
 
 <body>
 
-<!-- INTRO ANIMATION -->
-<div id="intro">
-    <h1>Happy Birthday, Hachiiii 🎀</h1>
-    <p>Someone special made this for you 💗</p>
-</div>
+<h1>Happy Birthday Hachiiii 🎉💗</h1>
 
-<!-- MAIN CONTENT -->
-<h2>🎉 Happy Birthday, Hachiiii 🎉</h2>
+<img src="cake.png" class="cake-image" alt="Birthday Cake">
 
-<p id="message">
-    Hachiiii,<br>
-    No matter where I am, I’ll always be your annoying-but-loving sistaaa.<br>
-    Happy Birthday to my forever partner-in-crime 🎀
+<p>
+To my dearest Hachiiii,  
+My annoying-but-loving **sistaaa**,  
+I hope your day is as cute as you pretend not to be 😌💗  
+May you be blessed with happiness, surprises, and lots of cake (not mine).  
 </p>
 
-<!-- Realistic cake image -->
-<img id="cake" src="https://i.ibb.co/WpP6f9d/real-cake-with-candle.jpg">
-
-<p>Click the cake and blow! 🎂</p>
-
-<button id="btn">Play Birthday Song 🎶</button>
-
-<audio id="audio" src="https://files.freemusicarchive.org/storage-freemusicarchive-org/music/no_curator/George_Smythe/Birthday_Songs/George_Smythe_-_Happy_Birthday_My_Dear.mp3"></audio>
+<!-- Audio (will work when you upload voice.mp3) -->
+<audio id="birthdayAudio" autoplay>
+    <source src="voice.mp3" type="audio/mpeg">
+</audio>
 
 <script>
-    const audio = document.getElementById("audio");
-
-    document.getElementById("btn").addEventListener("click", () => {
-        audio.play().catch(() => alert("Tap again to allow audio!"));
-    });
-
-    /* Confetti */
-    function confetti() {
-        const colors = ["#ff007f", "#ff4da6", "#ff80bf", "#ffb3d9", "#ffe6f2"];
-        for (let i = 0; i < 150; i++) {
-            let c = document.createElement("div");
-            c.style.position = "fixed";
-            c.style.width = "8px";
-            c.style.height = "8px";
-            c.style.background = colors[Math.floor(Math.random() * colors.length)];
-            c.style.top = "-10px";
-            c.style.left = Math.random() * window.innerWidth + "px";
-            c.style.opacity = Math.random();
-            c.style.transform = "rotate(" + Math.random() * 360 + "deg)";
-            c.style.transition = "top 3s ease-in";
-            document.body.appendChild(c);
-
-            setTimeout(() => c.style.top = window.innerHeight + "px", 10);
-            setTimeout(() => c.remove(), 3200);
-        }
-    }
-
-    setTimeout(confetti, 500);
-
-    /* Blow out candle */
-    const cake = document.getElementById("cake");
-
-    cake.addEventListener("click", async () => {
-        try {
-            const stream = await navigator.mediaDevices.getUserMedia({ audio: true });
-            const audioContext = new AudioContext();
-            const mic = audioContext.createMediaStreamSource(stream);
-            const analyser = audioContext.createAnalyser();
-
-            analyser.fftSize = 512;
-            mic.connect(analyser);
-
-            let data = new Uint8Array(analyser.frequencyBinCount);
-
-            const detect = () => {
-                analyser.getByteFrequencyData(data);
-                let volume = data.reduce((a, b) => a + b) / data.length;
-
-                if (volume > 60) {
-                    cake.src = "https://i.ibb.co/HLZffQf/real-cake-no-candle.jpg";
-                    say("Happy Birthday Hachiiii! Enjoy your day cutie!");
-                    confetti();
-                    stream.getTracks().forEach(t => t.stop());
-                } else {
-                    requestAnimationFrame(detect);
-                }
-            };
-
-            detect();
-
-        } catch (e) {
-            alert("Microphone needed to blow the candle.");
-        }
-    });
-
-    /* Female voice */
-    function say(text) {
-        const msg = new SpeechSynthesisUtterance(text);
-        msg.rate = 1.1;
-        msg.pitch = 1.4;    // Higher pitch for a fun female tone
-        msg.volume = 1;
-        speechSynthesis.speak(msg);
-    }
+window.addEventListener("click", () => {
+    const audio = document.getElementById("birthdayAudio");
+    audio.play();
+});
 </script>
 
 </body>
