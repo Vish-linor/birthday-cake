@@ -1,0 +1,216 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Happy Birthday Harshu 🎂</title>
+
+<!-- Handwritten pastel-style Google Font -->
+<link href="https://fonts.googleapis.com/css2?family=Pacifico&family=Poppins:wght@300;400;600&display=swap" rel="stylesheet">
+
+<style>
+    body {
+        margin: 0;
+        background: #fff6fb;
+        font-family: 'Poppins', sans-serif;
+        overflow-x: hidden;
+        text-align: center;
+    }
+
+    /* INTRO SCREEN */
+    #intro {
+        position: fixed;
+        inset: 0;
+        background: linear-gradient(135deg, #ffe6f2, #fff0f7, #ffe9f5);
+        display: flex;
+        flex-direction: column;
+        justify-content: center;
+        align-items: center;
+        animation: fadeOut 1s ease-in forwards;
+        animation-delay: 4.5s;
+        z-index: 10;
+    }
+
+    @keyframes fadeOut {
+        to { opacity: 0; pointer-events: none; }
+    }
+
+    #intro h1 {
+        font-family: 'Pacifico', cursive;
+        font-size: 48px;
+        color: #d6006f;
+        animation: introFade 2s ease-in-out;
+    }
+
+    #intro p {
+        margin-top: 20px;
+        font-size: 20px;
+        color: #b30059;
+        opacity: 0;
+        animation: introFade 2s ease-in-out forwards;
+        animation-delay: 1.8s;
+    }
+
+    @keyframes introFade {
+        from { opacity: 0; transform: translateY(20px); }
+        to { opacity: 1; transform: translateY(0); }
+    }
+
+    /* MAIN CONTENT */
+    #content {
+        padding-top: 80px;
+        opacity: 0;
+        animation: showContent 1.2s ease-in forwards;
+        animation-delay: 4.8s;
+    }
+
+    @keyframes showContent {
+        to { opacity: 1; }
+    }
+
+    h1 {
+        font-family: 'Pacifico', cursive;
+        font-size: 42px;
+        color: #d6006f;
+    }
+
+    /* PERSONAL MESSAGE */
+    #message {
+        background: #ffe6f2;
+        padding: 20px;
+        margin: 20px auto;
+        width: 85%;
+        max-width: 600px;
+        border-radius: 14px;
+        font-size: 18px;
+        color: #a40055;
+        line-height: 1.7;
+        box-shadow: 0 4px 12px rgba(255, 185, 225, 0.5);
+        font-family: 'Poppins', sans-serif;
+    }
+
+    #cake {
+        width: 220px;
+        cursor: pointer;
+        margin-top: 25px;
+        transition: transform .2s ease-in-out;
+    }
+
+    #cake:hover {
+        transform: scale(1.05);
+    }
+
+    #btn {
+        background: #d6006f;
+        border: none;
+        border-radius: 10px;
+        padding: 14px 26px;
+        color: #fff;
+        margin-top: 25px;
+        font-size: 20px;
+        cursor: pointer;
+        font-family: 'Poppins', sans-serif;
+    }
+</style>
+</head>
+<body>
+
+<!-- INTRO SCREEN -->
+<div id="intro">
+    <h1>Hi Harshu… 🎀</h1>
+    <p>Someone has a little surprise for you ✨</p>
+</div>
+
+<!-- MAIN CONTENT -->
+<div id="content">
+    <h1>🎉 Happy Birthday, Harshu! 🎉</h1>
+
+    <!-- PERSONAL MESSAGE -->
+    <div id="message">
+        Harshu, you deserve the softest moments, the sweetest smiles,  
+        and all the happiness in the world today.  
+        Even from miles away, this day is yours.  
+        Hope this small surprise makes you smile. 💗✨  
+    </div>
+
+    <img id="cake" src="https://i.ibb.co/WfFMGvS/birthday-cake.png" alt="Cake">
+
+    <p>Tap the cake and blow to put out the candle 🎂✨</p>
+
+    <button id="btn">Play Birthday Song 🎶</button>
+
+    <audio id="audio"
+        src="https://cdn.pixabay.com/download/audio/2022/03/15/audio_4b0c1e64d3.mp3?filename=happy-birthday-to-you-piano-110254.mp3">
+    </audio>
+</div>
+
+<script>
+    const audio = document.getElementById("audio");
+    document.getElementById("btn").addEventListener("click", () => audio.play());
+
+    function confetti() {
+        const colors = ["#ff80bf", "#ffb3d9", "#ffe6f2", "#ffcce5", "#ff99cc"];
+        for (let i = 0; i < 140; i++) {
+            let c = document.createElement("div");
+            c.style.position = "fixed";
+            c.style.width = "10px";
+            c.style.height = "10px";
+            c.style.backgroundColor = colors[Math.floor(Math.random() * colors.length)];
+            c.style.top = "-10px";
+            c.style.left = Math.random() * innerWidth + "px";
+            c.style.opacity = Math.random() * 0.8 + 0.2;
+            c.style.borderRadius = "4px";
+            c.style.transition = "top 3s ease-in";
+            document.body.appendChild(c);
+            setTimeout(() => c.style.top = innerHeight + "px", 20);
+            setTimeout(() => c.remove(), 3100);
+        }
+    }
+
+    confetti();
+
+    const cake = document.getElementById("cake");
+
+    cake.addEventListener("click", async () => {
+        try {
+            const stream = await navigator.mediaDevices.getUserMedia({ audio: true });
+            const audioContext = new AudioContext();
+            const mic = audioContext.createMediaStreamSource(stream);
+            const analyser = audioContext.createAnalyser();
+
+            analyser.fftSize = 512;
+            mic.connect(analyser);
+
+            let data = new Uint8Array(analyser.frequencyBinCount);
+
+            const detect = () => {
+                analyser.getByteFrequencyData(data);
+                const vol = data.reduce((a, b) => a + b) / data.length;
+
+                if (vol > 60) {
+                    cake.src = "https://i.ibb.co/LtqFn2F/cake-no-candle.png";
+                    confetti();
+                    speak("Happy Birthday, Harshu!");
+                    stream.getTracks().forEach(t => t.stop());
+                } else {
+                    requestAnimationFrame(detect);
+                }
+            };
+
+            detect();
+        } catch (err) {
+            alert("Mic access needed for blowing!");
+        }
+    });
+
+    function speak(text) {
+        const msg = new SpeechSynthesisUtterance(text);
+        msg.pitch = 1.05;
+        msg.rate = 1;
+        msg.volume = 1;
+        speechSynthesis.speak(msg);
+    }
+</script>
+
+</body>
+</html>
